@@ -1,0 +1,12 @@
+WIDTH, HEIGHT = 800, 600
+CAPTION = "Shoot Simulator"
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+READING_ERROR = "Error Reading joycon:"
+INITIALIZATION_ERROR = "Error initializing external peripheral:"
+PRESS_STATUS = 1
+SHOOT_ACTION = "zr"
+GENERIC_ERROR = "Error:"
+SCREEN_FILL = (0,0,0)
+POINTER_REFRESH_TIME = 0.0001
+POINTER_SIZE = 5
