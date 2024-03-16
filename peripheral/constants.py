@@ -1,0 +1,13 @@
+WIDTH, HEIGHT = 800, 600
+CAPTION = "JoyCon Pointer"
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+READING_ERROR = "Error Reading joycon:"
+INITIALIZATION_ERROR = "Error initializing external peripheral:"
+PRESS_STATUS = (0, 1)
+SHOOT_ACTION = "zr"
+SHOOT_MADE = 1
+GENERIC_ERROR = "Error:"
+SCREEN_FILL = (0,0,0)
+POINTER_REFRESH_TIME = 0.0001
+POINTER_SIZE = 5
