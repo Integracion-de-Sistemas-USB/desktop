@@ -1,5 +1,5 @@
 import pygame
-from .constants import *
+from peripheral.constants import WIDTH, HEIGHT, POINTER_SIZE
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
