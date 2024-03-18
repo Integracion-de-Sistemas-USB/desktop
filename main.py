@@ -1,4 +1,3 @@
-# main.py
 from simulator.simulator import simulator
 from form.form_module import build_form
 

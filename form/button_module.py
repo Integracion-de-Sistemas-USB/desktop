@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import threading
+from .text_constants import SELECTED_OPTION, SELECTED_PERCENTAGE
 
 form_built_flag = threading.Event()
 
@@ -13,8 +14,8 @@ def create_button_frame(parent_frame, name_entries, option, percentage_var, call
             name = name_entry.get()
             form_data[name_label[:-1]] = name
 
-        form_data["Selected Option"] = option.get()
-        form_data["Selected Percentage"] = percentage_var.get()
+        form_data[SELECTED_OPTION] = option.get()
+        form_data[SELECTED_PERCENTAGE] = percentage_var.get()
 
         form_built_flag.set()
         parent_frame.destroy()
