@@ -1,5 +1,8 @@
 import pygame
 from peripheral.constants import WIDTH, HEIGHT, POINTER_SIZE
+from form.form_module import form_built_flag
+
+form_built_flag.wait()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 

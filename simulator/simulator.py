@@ -1,9 +1,10 @@
 import pygame
 from pygame.locals import QUIT
 import time
-from .shoot_draw import screen, draw_mouse_pointer, draw_peripheral_pointer, draw_shoots
 from peripheral.constants import (
+    BLUE,
     CAPTION,
+    GREEN,
     INITIALIZATION_ERROR,
     SCREEN_FILL,
     READING_ERROR,
@@ -13,13 +14,9 @@ from peripheral.constants import (
     GENERIC_ERROR
 )
 
-pygame.init()
-
-pygame.display.set_caption(CAPTION)
-
 red_points = []
 
-def simulator():
+def simulator(data):
     try:
         try:
             from peripheral.external_peripheral import ExternalPeripheral
@@ -27,6 +24,11 @@ def simulator():
         except Exception as e:
             print(INITIALIZATION_ERROR, e)
             peripheral = None
+
+        from .shoot_draw import screen, draw_mouse_pointer, draw_peripheral_pointer, draw_shoots
+        pygame.init()
+
+        pygame.display.set_caption(CAPTION)
 
         running = True
         while running:
@@ -53,7 +55,7 @@ def simulator():
                 draw_peripheral_pointer(pointer_position, WHITE)
             else:
                 draw_mouse_pointer(pointer_position, WHITE)
-            draw_shoots(red_points, RED, peripheral)
+            draw_shoots(red_points, GREEN if data['Calibre'] == '1' else BLUE, peripheral)
 
             pygame.display.flip()
             time.sleep(POINTER_REFRESH_TIME)

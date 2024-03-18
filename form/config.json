@@ -1,5 +1,0 @@
-{
-    "physics": ["Calibre", "Bullet weight", "Distance", "Ammo"],
-    "environment": ["Temperature", "Altitude", "Pressure", "Humidity"]
-  }
-  
