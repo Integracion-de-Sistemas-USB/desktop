@@ -3,18 +3,16 @@ from WeaponCalculator import WeaponCalculator
 
 class WeaponService:
     def __init__(self):
-        self.calculator = WeaponCalculator()
+        self.weapon_calculator = WeaponCalculator()
 
-    def perform_parabolic_shot(self, initial_velocity, angle, weapon_id):
-        weapon_data = self.get_weapon_data(weapon_id)
-        gravity = self.calculator.gravity_constant
-        return self.calculator.parabolic_shot(initial_velocity, angle, gravity, weapon_data.get("caliber", 0))
+    def calculate_perfect_distance(self, initial_velocity, angle):
+        return self.weapon_calculator.perfect_distance(initial_velocity, angle)
 
-    def perform_semiparabolic_shot(self, initial_velocity, angle, weapon_id):
-        weapon_data = self.get_weapon_data(weapon_id)
-        gravity = self.calculator.gravity_constant
-        return self.calculator.semiparabolic_shot(initial_velocity, angle, gravity, weapon_data.get("caliber", 0))
+    def calculate_affected_distance(self, initial_velocity, angle, weapon_data, altitude, temperature_change_rate, sea_level_temperature):
+        return self.weapon_calculator.affected_distance(initial_velocity, angle, weapon_data, altitude, temperature_change_rate, sea_level_temperature)
 
-    def calculate_affected_distance(self, perfect_distance, altitude, temperature_change_rate, sea_level_temperature, weapon_id):
-        weapon_data = self.get_weapon_data(weapon_id)
-        return self.calculator.calculate_effects_on_perfect_distance(weapon_data, perfect_distance, altitude, temperature_change_rate, sea_level_temperature)
+    def simulate_horizontal_shot(self, initial_velocity, angle, gravity, time_step, total_time, weapon_data, altitude, temperature_change_rate, sea_level_temperature):
+        return self.weapon_calculator.simulate_horizontal_shot(initial_velocity, angle, gravity, time_step, total_time, weapon_data, altitude, temperature_change_rate, sea_level_temperature)
+
+    def simulate_parabolic_shot(self, initial_velocity, angle, gravity, time_step, total_time, weapon_data, altitude, temperature_change_rate, sea_level_temperature):
+        return self.weapon_calculator.simulate_parabolic_shot(initial_velocity, angle, gravity, time_step, total_time, weapon_data, altitude, temperature_change_rate, sea_level_temperature)
