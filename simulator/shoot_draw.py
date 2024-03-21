@@ -7,9 +7,10 @@ form_built_flag.wait()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 def draw_peripheral_pointer(pointer_position, color):
-    x = min(max(int(pointer_position[0] * WIDTH / 2 + WIDTH / 2), 0), WIDTH)
-    y = min(max(int(-pointer_position[1] * HEIGHT / 2 + HEIGHT / 2), 0), HEIGHT)
-    pygame.draw.circle(screen, color, (x, y), POINTER_SIZE)
+    if pointer_position != None:
+        x = min(max(int(pointer_position[0] * WIDTH / 2 + WIDTH / 2), 0), WIDTH)
+        y = min(max(int(-pointer_position[1] * HEIGHT / 2 + HEIGHT / 2), 0), HEIGHT)
+        pygame.draw.circle(screen, color, (x, y), POINTER_SIZE)
 
 def draw_mouse_pointer(pointer_position, color):
     x = pointer_position[0]
