@@ -1,8 +1,6 @@
 from io import BytesIO
 import os
 import pygame
-from pygame.locals import QUIT
-import time
 from dotenv import load_dotenv
 import aiohttp
 
@@ -10,12 +8,6 @@ from peripheral.constants import (
     AUDIO,
     CAPTION,
     IMAGE,
-    INITIALIZATION_ERROR,
-    SCREEN_FILL,
-    READING_ERROR,
-    WHITE,
-    RED,
-    POINTER_REFRESH_TIME,
     GENERIC_ERROR,
     WIDTH,
     HEIGHT,
@@ -23,8 +15,6 @@ from peripheral.constants import (
 )
 
 load_dotenv()
-
-red_points = []
 
 async def request_scenary(session, scenary):
     async with session.get(os.getenv(SCENARY) + scenary.lower()) as response:
@@ -46,14 +36,6 @@ async def get_image_audio(scenary):
 
 async def simulator(data):
     try:
-        try:
-            from peripheral.external_peripheral import ExternalPeripheral
-            peripheral = ExternalPeripheral()
-        except Exception as e:
-            print(INITIALIZATION_ERROR, e)
-            peripheral = None
-
-        from .shoot_draw import draw_mouse_pointer, draw_peripheral_pointer, draw_shoots
         pygame.init()
 
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -68,36 +50,8 @@ async def simulator(data):
 
         background_sound.play()
 
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    running = False
-
-            screen.fill(SCREEN_FILL)
-            screen.blit(background_image, (0, 0))
-
-            if peripheral:
-                try:
-                    pointer_position = peripheral.get_pointer_position()
-                    if peripheral.get_button_events():
-                        red_points.append(pointer_position)
-                except Exception as e:
-                    print(READING_ERROR, e)
-                    peripheral = None
-            else:
-                pointer_position = pygame.mouse.get_pos()
-                if pygame.mouse.get_pressed()[0]:
-                    red_points.append(pointer_position)
-
-            if peripheral:
-                draw_peripheral_pointer(pointer_position, WHITE, screen)
-            else:
-                draw_mouse_pointer(pointer_position, WHITE, screen)
-            draw_shoots(red_points, RED, peripheral, screen)
-
-            pygame.display.flip()
-            time.sleep(POINTER_REFRESH_TIME)
+        from simulator.running_loop import start
+        await start(screen, background_image)
     
     except Exception as e:
         print(GENERIC_ERROR, e)

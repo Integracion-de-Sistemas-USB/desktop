@@ -15,3 +15,5 @@ POINTER_SIZE = 5
 IMAGE = 'image'
 AUDIO = 'audio'
 SCENARY = 'SCENARY_URL'
+HALF = 2
+ZERO = 0
