@@ -11,3 +11,6 @@ This microservice contains the form, peripheral and simulation modules
 5. Rename ".env.example" to ".env"
 5. Start the program: `python3 main.py`
 6. Close the virtual environment: `deactivate`
+
+## Recomendations
+1. In case tkinter is not installed: `sudo apt-get install python3-tk`
