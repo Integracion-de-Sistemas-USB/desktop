@@ -1,5 +1,6 @@
 import time
 import pygame
+from server import statistics;
 
 from peripheral.constants import (
     INITIALIZATION_ERROR,
@@ -42,6 +43,7 @@ async def start(screen, background_image):
                 pointer_position = peripheral.get_pointer_position()
                 if peripheral.get_button_events():
                     red_points.append(pointer_position)
+                    statistics.send_post_request(pointer_position)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -49,6 +51,7 @@ async def start(screen, background_image):
             pointer_position = pygame.mouse.get_pos()
             if pygame.mouse.get_pressed()[0]:
                 red_points.append(pointer_position)
+                statistics.send_post_request(pointer_position)
 
         if peripheral:
             draw_peripheral_pointer(pointer_position, WHITE, screen)
