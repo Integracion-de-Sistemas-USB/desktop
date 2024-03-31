@@ -11,7 +11,8 @@ from peripheral.constants import (
     GENERIC_ERROR,
     WIDTH,
     HEIGHT,
-    SCENARY
+    SCENARY,
+    WAR_SOUNDS
 )
 
 load_dotenv()
@@ -39,16 +40,20 @@ async def simulator(data):
         pygame.init()
 
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        
+        print(data)
         image_data, audio_data = await get_image_audio(data['Selected Option'])
 
         background_image = pygame.image.load(BytesIO(image_data))
         pygame.mixer.init()
         background_sound = pygame.mixer.Sound(BytesIO(audio_data))
+        war_sound = pygame.mixer.Sound(os.getenv(WAR_SOUNDS))
 
         pygame.display.set_caption(CAPTION)
 
-        background_sound.play()
+        background_sound.play(-1)
+
+        if data['Selected Percentage'] != '0%':
+            war_sound.play(-1)
 
         from simulator.running_loop import start
         await start(screen, background_image)
