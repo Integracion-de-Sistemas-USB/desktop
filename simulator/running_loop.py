@@ -15,10 +15,7 @@ from simulator.shoot_draw import (
     draw_peripheral_pointer,
     draw_shoots
 )
-from form.form_module import form_built_flag
 import os
-
-form_built_flag.wait()
 
 pygame.mixer.init()
 shoot_sound = pygame.mixer.Sound(os.getenv(SHOOT))

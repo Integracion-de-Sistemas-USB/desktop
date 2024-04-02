@@ -3,7 +3,7 @@ from tkinter import ttk
 from .entry_module import create_name_entry_frame
 from .radio_button_module import create_radio_button_frame
 from .drop_menu_module import create_drop_menu_frame
-from .button_module import create_button_frame, form_built_flag
+from .button_module import create_button_frame
 import json
 from .text_constants import (
     BOLD, 
