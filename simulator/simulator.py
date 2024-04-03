@@ -40,7 +40,6 @@ async def simulator(data):
         pygame.init()
 
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        print(data)
         image_data, audio_data = await get_image_audio(data['Selected Option'])
 
         background_image = pygame.image.load(BytesIO(image_data))
