@@ -1,7 +1,7 @@
 import os
 import aiohttp
 
-from peripheral.constants import (
+from request.constants import (
     AUDIO,
     IMAGE,
     SCENARY

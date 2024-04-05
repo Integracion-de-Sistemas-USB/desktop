@@ -6,7 +6,6 @@ from make_request import get_image_audio
 
 class TestMakeRequest(unittest.IsolatedAsyncioTestCase):
     async def test_get_image_audio(self):
-        # Mocking the data returned by the API
         mocked_data = [
             {
                 'image': 'https://example.com/image.jpg',
@@ -17,7 +16,6 @@ class TestMakeRequest(unittest.IsolatedAsyncioTestCase):
         async def mocked_request_scenary(session, scenary):
             return mocked_data
 
-        # Patching the request_scenary function
         with patch('make_request.request_scenary', new=AsyncMock(side_effect=mocked_request_scenary)):
             async with ClientSession() as session:
                 image_data, audio_data = await get_image_audio('scenary')

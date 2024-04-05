@@ -12,7 +12,7 @@ from peripheral.constants import (
     HEIGHT,
     WAR_SOUNDS
 )
-from .make_request import get_image_audio
+from request.make_request import get_image_audio
 
 load_dotenv()
 
