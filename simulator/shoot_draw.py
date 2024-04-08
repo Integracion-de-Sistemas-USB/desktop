@@ -6,9 +6,6 @@ from peripheral.constants import (
     POINTER_SIZE, 
     ZERO
 )
-from form.form_module import form_built_flag
-
-form_built_flag.wait()
 
 def draw_peripheral_pointer(pointer_position, color, screen):
     if pointer_position != None:
