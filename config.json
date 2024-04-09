@@ -1,7 +1,7 @@
 {
     "physics": ["Calibre", "Bullet weight", "Distance", "Ammo"],
     "environment": ["Temperature", "Altitude", "Pressure", "Humidity"],
-    "scenary": ["Jungle", "City", "Desert", "Snow"],
-    "stress": ["0%", "20%", "40%", "60%", "80%", "100%"]
+    "scenery": ["Jungle", "City", "Desert", "Snow"],
+    "stress": ["Low", "Medium", "High"]
   }
   

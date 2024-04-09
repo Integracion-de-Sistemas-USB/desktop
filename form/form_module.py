@@ -13,7 +13,7 @@ from .text_constants import (
     HELVETICA, 
     PHYSICS, 
     PHYSICS_LABEL, 
-    SCENARY_LABEL, 
+    SCENERY_LABEL, 
     STRESS_LABEL, 
     STYLE
 )
@@ -53,7 +53,7 @@ def build_form(callback):
         name_entry_frame.grid(row=i, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         name_entries_environment.append((name_entry_label, name_entry))
 
-    create_title_label(root, SCENARY_LABEL, row=0, column=1)
+    create_title_label(root, SCENERY_LABEL, row=0, column=1)
     radio_button_frame, option = create_radio_button_frame(root)
     radio_button_frame.grid(row=1, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), rowspan=len(physics))
 

@@ -3,27 +3,29 @@ import os
 import pygame
 from dotenv import load_dotenv
 import aiohttp
+import threading
 
 from peripheral.constants import (
     AUDIO,
     CAPTION,
     IMAGE,
     GENERIC_ERROR,
+    SOUND_DURATION_LIMIT,
     WIDTH,
     HEIGHT,
-    SCENARY,
+    SCENERY,
     WAR_SOUNDS
 )
 
 load_dotenv()
 
-async def request_scenary(session, scenary):
-    async with session.get(os.getenv(SCENARY) + scenary.lower()) as response:
+async def request_scenery(session, scenery):
+    async with session.get(os.getenv(SCENERY) + scenery.lower()) as response:
         return await response.json()
     
-async def get_image_audio(scenary):
+async def get_image_audio(scenery):
     async with aiohttp.ClientSession() as session:
-        data = await request_scenary(session, scenary)
+        data = await request_scenery(session, scenery)
 
         image_url = data[0][IMAGE]
         async with session.get(image_url) as response:
@@ -35,6 +37,11 @@ async def get_image_audio(scenary):
 
     return image_data, audio_data
 
+def play_war_sounds():
+    pygame.mixer.init()
+    war_sound = pygame.mixer.Sound(os.getenv(WAR_SOUNDS))
+    war_sound.play(SOUND_DURATION_LIMIT)
+
 async def simulator(data):
     try:
         pygame.init()
@@ -43,16 +50,16 @@ async def simulator(data):
         image_data, audio_data = await get_image_audio(data['Selected Option'])
 
         background_image = pygame.image.load(BytesIO(image_data))
-        pygame.mixer.init()
-        background_sound = pygame.mixer.Sound(BytesIO(audio_data))
-        war_sound = pygame.mixer.Sound(os.getenv(WAR_SOUNDS))
 
         pygame.display.set_caption(CAPTION)
 
-        background_sound.play(-1)
+        if data['Selected Percentage'] != 'None':
+            war_thread = threading.Thread(target=play_war_sounds)
+            war_thread.start()
 
-        if data['Selected Percentage'] != '0%':
-            war_sound.play(-1)
+        pygame.mixer.init()
+        background_sound = pygame.mixer.Sound(BytesIO(audio_data))
+        background_sound.play(SOUND_DURATION_LIMIT)
 
         from simulator.running_loop import start
         await start(screen, background_image)

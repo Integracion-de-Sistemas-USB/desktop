@@ -154,3 +154,6 @@ tags
 
 # SageMath
 .sage/
+
+# Simulation Folder
+simulation/
