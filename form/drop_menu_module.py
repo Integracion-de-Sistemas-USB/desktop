@@ -12,10 +12,10 @@ def create_drop_menu_frame(parent_frame):
 
     stress_options = config_data[STRESS]
 
-    percentage_label = ttk.Label(frame, text="Percentage:")
+    percentage_label = ttk.Label(frame, text="Level:")
     percentage_label.grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
 
-    percentage_var = tk.StringVar(value="0%")
+    percentage_var = tk.StringVar(value="None")
 
     percentage_combobox = ttk.Combobox(frame, values=stress_options, textvariable=percentage_var)
     percentage_combobox.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
