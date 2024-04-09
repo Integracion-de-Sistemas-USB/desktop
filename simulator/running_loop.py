@@ -15,6 +15,8 @@ from simulator.shoot_draw import (
     draw_peripheral_pointer,
     draw_shoots
 )
+from simulator.target_draw import draw_target_with_distance
+
 import os
 
 pygame.mixer.init()
@@ -22,7 +24,7 @@ shoot_sound = pygame.mixer.Sound(os.getenv(SHOOT))
 
 red_points = []
 
-async def start(screen, background_image):
+async def start(screen, background_image, stress):
     try:
         from peripheral.external_peripheral import ExternalPeripheral
         peripheral = ExternalPeripheral()
@@ -46,7 +48,7 @@ async def start(screen, background_image):
                 if peripheral.get_button_events():
                     red_points.append(pointer_position)
                     shoot_sound.play()
-                    statistics.send_post_request(pointer_position)
+                    statistics.send_post_request(pointer_position, screen)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -56,7 +58,7 @@ async def start(screen, background_image):
                 if not mouse_pressed:
                     red_points.append(pointer_position)
                     shoot_sound.play()
-                    statistics.send_post_request(pointer_position)
+                    statistics.send_post_request(pointer_position, screen)
                     mouse_pressed = True
             else:
                 mouse_pressed = False
@@ -66,6 +68,7 @@ async def start(screen, background_image):
         else:
             draw_mouse_pointer(pointer_position, WHITE, screen)
         draw_shoots(red_points, RED, peripheral, screen)
+        draw_target_with_distance(stress, screen)
 
         pygame.display.flip()
         time.sleep(POINTER_REFRESH_TIME)

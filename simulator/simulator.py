@@ -25,7 +25,7 @@ async def simulator(data):
     try:
         pygame.init()
 
-        screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
         image_data, audio_data = await get_image_audio(data['Selected Option'])
 
         background_image = pygame.image.load(BytesIO(image_data))
@@ -41,8 +41,8 @@ async def simulator(data):
         background_sound.play(SOUND_DURATION_LIMIT)
 
         from simulator.running_loop import start
-        await start(screen, background_image)
-
+        await start(screen, background_image, data['Selected Percentage'])
+    
     except Exception as e:
         print(GENERIC_ERROR, e)
     finally:

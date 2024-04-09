@@ -1,17 +1,17 @@
 import requests
 import os
 from dotenv import load_dotenv
-from peripheral.constants import WIDTH, HEIGHT
+from peripheral.constants import WIDTH, HEIGHT, HALF, ZERO
 
-def send_post_request(pointer_position):
+def send_post_request(pointer_position, screen):
     load_dotenv()
     
     url = os.getenv("CREATE_URL")
     
     sample_data = {
         "name": "Shoot Example Joycon Position",
-        "x": min(max((pointer_position[0] * WIDTH / 2 + WIDTH / 2), 0), WIDTH),
-        "y": min(max(int(-pointer_position[1] * HEIGHT / 2 + HEIGHT / 2), 0), HEIGHT),
+        "x": min(max((pointer_position[0] * WIDTH / HALF + screen.get_rect().centerx), ZERO), WIDTH),
+        "y": min(max((-pointer_position[1] * HEIGHT / HALF + screen.get_rect().centery), ZERO), HEIGHT),
         "scenery": {
             "bullet_weight": 5.0,
             "distance": 100.0,

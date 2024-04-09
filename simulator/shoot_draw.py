@@ -9,8 +9,8 @@ from peripheral.constants import (
 
 def draw_peripheral_pointer(pointer_position, color, screen):
     if pointer_position != None:
-        x = min(max(int(pointer_position[0] * WIDTH / HALF + WIDTH / HALF), ZERO), WIDTH)
-        y = min(max(int(-pointer_position[1] * HEIGHT / HALF + HEIGHT / HALF), ZERO), HEIGHT)
+        x = min(max((pointer_position[0] * WIDTH / HALF + screen.get_rect().centerx), ZERO), WIDTH)
+        y = min(max((-pointer_position[1] * HEIGHT / HALF + screen.get_rect().centery), ZERO), HEIGHT)
         pygame.draw.circle(screen, color, (x, y), POINTER_SIZE)
 
 def draw_mouse_pointer(pointer_position, color, screen):
