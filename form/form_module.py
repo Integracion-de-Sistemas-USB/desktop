@@ -15,7 +15,7 @@ from .text_constants import (
     PHYSICS_LABEL, 
     SCENERY_LABEL, 
     STRESS_LABEL, 
-    STYLE
+    USER_LABEL
 )
 
 def build_form(callback):
@@ -23,7 +23,6 @@ def build_form(callback):
     root.title(FORM_TITLE)
 
     style = ttk.Style()
-    style.theme_use(STYLE)
 
     def create_title_label(parent, text, row, column=0):
         label = tk.Label(parent, text=text, font=(HELVETICA, 12, BOLD))
@@ -61,7 +60,14 @@ def build_form(callback):
     drop_menu_frame, percentage_var = create_drop_menu_frame(root)
     drop_menu_frame.grid(row=len(physics) + 2, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), rowspan=len(environment))
 
-    button_frame = create_button_frame(root, name_entries_physics + name_entries_environment, option, percentage_var, callback)
-    button_frame.grid(row=len(physics) + len(environment) + 2, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
+    create_title_label(root, USER_LABEL, row=len(physics) + len(environment) + 3)
+    user_name_frame, user_name_entry = create_name_entry_frame(root, label_text="Name:")
+    user_name_frame.grid(row=len(physics) + len(environment) + 4, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+    user_code_frame, user_code_entry = create_name_entry_frame(root, label_text="Code:")
+    user_code_frame.grid(row=len(physics) + len(environment) + 5, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+    button_frame = create_button_frame(root, name_entries_physics + name_entries_environment, option, percentage_var, user_name_entry, user_code_entry, callback)
+    button_frame.grid(row=len(physics) + len(environment) + 6, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
 
     root.mainloop()
