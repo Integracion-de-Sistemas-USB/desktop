@@ -1,3 +1,3 @@
 IMAGE = 'image'
 AUDIO = 'audio'
-SCENARY = 'SCENARY_URL'
+SCENERY = 'SCENERY_URL'
