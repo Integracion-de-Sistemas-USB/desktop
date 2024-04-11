@@ -49,17 +49,19 @@ async def start(screen, background_image, stress):
                 if peripheral.get_button_events():
                     red_points.append(pointer_position)
                     shoot_sound.play()
-                    print(f"{SCORE}:", calculate_score(screen, pointer_position, stress))
+                    print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
                     statistics.send_post_request(pointer_position, screen)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
         else:
+            # Testing Porpuse
             pointer_position = pygame.mouse.get_pos()
             if pygame.mouse.get_pressed()[0]:
                 if not mouse_pressed:
                     red_points.append(pointer_position)
                     shoot_sound.play()
+                    print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
                     statistics.send_post_request(pointer_position, screen)
                     mouse_pressed = True
             else:

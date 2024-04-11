@@ -30,14 +30,23 @@ def calculate_scaled_radii(distance):
     scale_factor = 5 / distance
     return [r * scale_factor for r in base_radii]
 
-def calculate_score(screen, collision_coordinate, stress):
+def calculate_score(screen, collision_coordinate, stress, peripheral):
     distance = calculate_distance(stress)
     w, h = pygame.display.get_surface().get_size()
     target_center = (w // 2, h // 2)
     scaled_radii = calculate_scaled_radii(distance)
+
+    if peripheral:
+        x = (min(max((collision_coordinate[0] * w / HALF + screen.get_rect().centerx), ZERO), w))
+        y = (min(max((-collision_coordinate[1] * h / HALF + screen.get_rect().centery), ZERO), h))
+    else:
+        # Testing Porpuse
+        x = collision_coordinate[0]
+        y = collision_coordinate[1]
+    
     distance_from_center = math.sqrt(
-        (target_center[0] - (min(max((collision_coordinate[0] * w / HALF + screen.get_rect().centerx), ZERO), w))) ** 2 +
-        (target_center[1] - (min(max((-collision_coordinate[1] * h / HALF + screen.get_rect().centery), ZERO), h))) ** 2)
+        (target_center[0] - x) ** 2 +
+        (target_center[1] - y) ** 2)
     if distance_from_center > scaled_radii[-1] or distance != distance:
         score = 0
     else:
