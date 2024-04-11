@@ -68,7 +68,7 @@ async def start(screen, background_image, stress):
         else:
             draw_mouse_pointer(pointer_position, WHITE, screen)
         draw_shoots(red_points, RED, peripheral, screen)
-        draw_target_with_distance(stress, screen)
+        draw_target_with_distance(stress, screen, pointer_position)
 
         pygame.display.flip()
         time.sleep(POINTER_REFRESH_TIME)

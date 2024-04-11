@@ -24,3 +24,6 @@ SOUND_DURATION_LIMIT = 60000
 STRESS_LOW = "Low"
 STRESS_MEDIUM = "Medium"
 STRESS_HIGH = "High"
+SCORE = "Score"
+DISTANCE = "Distance"
+METERS = "meters"
