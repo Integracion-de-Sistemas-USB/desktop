@@ -12,14 +12,14 @@ def send_post_request(pointer_position, screen):
         "name": "Shoot Example Joycon Position",
         "x": min(max((pointer_position[0] * WIDTH / HALF + screen.get_rect().centerx), ZERO), WIDTH),
         "y": min(max((-pointer_position[1] * HEIGHT / HALF + screen.get_rect().centery), ZERO), HEIGHT),
-        "scenery": {
+        "scenary": {
             "bullet_weight": 5.0,
             "distance": 100.0,
             "ammo": "Sample Ammo",
             "temperature": 25.0,
             "altitude": 500.0,
             "humidity": 50.0,
-            "scenery": "Sample Scenery",
+            "scenary": "Sample Scenery",
             "stress_level": 3,
             "caliber": 0.45
         }
