@@ -44,13 +44,15 @@ async def start(screen, background_image, stress):
         screen.blit(background_image, (0, 0))
 
         if peripheral:
+            pygame.mouse.set_visible(False)
             try:
                 pointer_position = peripheral.get_pointer_position()
                 if peripheral.get_button_events():
-                    red_points.append(pointer_position)
-                    shoot_sound.play()
-                    print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
-                    statistics.send_post_request(pointer_position, screen)
+                    if pointer_position != None:
+                        red_points.append(pointer_position)
+                        shoot_sound.play()
+                        print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
+                        statistics.send_post_request(pointer_position, screen)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None

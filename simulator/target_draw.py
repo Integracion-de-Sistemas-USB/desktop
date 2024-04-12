@@ -32,7 +32,7 @@ def calculate_scaled_radii(distance):
 
 def calculate_score(screen, collision_coordinate, stress, peripheral):
     distance = calculate_distance(stress)
-    w, h = pygame.display.get_surface().get_size()
+    w, h = screen.get_size()
     target_center = (w // 2, h // 2)
     scaled_radii = calculate_scaled_radii(distance)
 
@@ -57,7 +57,7 @@ def calculate_score(screen, collision_coordinate, stress, peripheral):
     return score
 
 def draw_target(distance, screen):
-    w, h = pygame.display.get_surface().get_size()
+    w, h = screen.get_size()
     target_center = (w // 2, h // 2)
 
     scaled_radii = calculate_scaled_radii(distance)
