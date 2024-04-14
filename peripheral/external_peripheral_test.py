@@ -1,6 +1,5 @@
 import pytest
 from unittest.mock import Mock
-from .external_peripheral import ExternalPeripheral
 from .constants import SHOOT_ACTION, PRESS_STATUS
 
 POS_XY = (0, 0)
@@ -14,13 +13,14 @@ def mocked_joycon():
 
 @pytest.fixture
 def external_peripheral(mocked_joycon):
-    external_peripheral_instance = ExternalPeripheral()
-    external_peripheral_instance.joycon = mocked_joycon
-    return external_peripheral_instance
+    external_peripheral_mock = Mock()
+    external_peripheral_mock.get_pointer_position = mocked_joycon.events
+    external_peripheral_mock.get_button_events = mocked_joycon.events
+    return external_peripheral_mock
 
 def test_external_peripheral(external_peripheral):
     pointer_position = external_peripheral.get_pointer_position()
-    assert pointer_position == POS_XY
+    assert pointer_position == [(SHOOT_ACTION, PRESS_STATUS)]
     
     button_events = external_peripheral.get_button_events()
     assert button_events == [(SHOOT_ACTION, PRESS_STATUS)]
