@@ -4,6 +4,7 @@ import pygame
 from dotenv import load_dotenv
 import threading
 
+from form.text_constants import CODE, NAME
 from peripheral.constants import (
     CAPTION,
     GENERIC_ERROR,
@@ -41,7 +42,7 @@ async def simulator(data):
         background_sound.play(SOUND_DURATION_LIMIT)
 
         from simulator.running_loop import start
-        await start(screen, background_image, data['Selected Percentage'])
+        await start(screen, background_image, data['Selected Percentage'], data[NAME], data[CODE])
     
     except Exception as e:
         print(GENERIC_ERROR, e)

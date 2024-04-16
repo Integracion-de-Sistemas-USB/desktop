@@ -25,7 +25,7 @@ shoot_sound = pygame.mixer.Sound(os.getenv(SHOOT))
 
 red_points = []
 
-async def start(screen, background_image, stress):
+async def start(screen, background_image, stress, name, code):
     try:
         from peripheral.external_peripheral import ExternalPeripheral
         peripheral = ExternalPeripheral()
@@ -52,7 +52,7 @@ async def start(screen, background_image, stress):
                         red_points.append(pointer_position)
                         shoot_sound.play()
                         print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
-                        statistics.send_post_request(pointer_position, screen)
+                        statistics.send_post_request(pointer_position, screen, name, code)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -64,7 +64,7 @@ async def start(screen, background_image, stress):
                     red_points.append(pointer_position)
                     shoot_sound.play()
                     print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
-                    statistics.send_post_request(pointer_position, screen)
+                    statistics.send_post_request(pointer_position, screen, name, code)
                     mouse_pressed = True
             else:
                 mouse_pressed = False
