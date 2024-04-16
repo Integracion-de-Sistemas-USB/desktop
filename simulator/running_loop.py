@@ -33,6 +33,7 @@ async def start(screen, background_image, stress, name, code):
         print(INITIALIZATION_ERROR, e)
         peripheral = None
 
+    start_time = time.time()
     running = True
     mouse_pressed = False
     while running:
@@ -42,6 +43,15 @@ async def start(screen, background_image, stress, name, code):
 
         screen.fill(SCREEN_FILL)
         screen.blit(background_image, (0, 0))
+
+        elapsed_time = time.time() - start_time
+        timer_text = f"Time: {int(30 - elapsed_time)}s"
+        timer_font = pygame.font.SysFont(None, 30)
+        timer_surface = timer_font.render(timer_text, True, WHITE)
+        screen.blit(timer_surface, (10, screen.get_height() - 40))
+
+        if elapsed_time >= 30:
+            running = False
 
         if peripheral:
             pygame.mouse.set_visible(False)

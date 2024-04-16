@@ -26,7 +26,13 @@ async def simulator(data):
     try:
         pygame.init()
 
+        loading_font = pygame.font.SysFont('Arial', 30)
+        loading_text = loading_font.render("Loading...", True, (255, 255, 255))
         screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+        screen.fill((0, 0, 0))
+        screen.blit(loading_text, (WIDTH // 2 - loading_text.get_width() // 2, HEIGHT // 2 - loading_text.get_height() // 2))
+        pygame.display.flip()
+
         image_data, audio_data = await get_image_audio(data['Selected Option'])
 
         background_image = pygame.image.load(BytesIO(image_data))
