@@ -34,7 +34,7 @@ def send_post_request(pointer_position, screen, name, code):
     
     verify_respond(response)
 
-def send_coords_calculator(pointer_position, screen, stress):
+def send_coords_calculator(pointer_position, screen, stress, peripheral):
     load_dotenv()
     
     url = os.getenv("CALCULATE_URL")
@@ -43,8 +43,13 @@ def send_coords_calculator(pointer_position, screen, stress):
 
     w, h = screen.get_size()
 
-    x = min(max((pointer_position[0] * w / HALF + screen.get_rect().centerx), ZERO), w)
-    y = min(max((-pointer_position[1] * h / HALF + screen.get_rect().centery), ZERO), h)
+    if peripheral:
+        x = min(max((pointer_position[0] * w / HALF + screen.get_rect().centerx), ZERO), w)
+        y = min(max((-pointer_position[1] * h / HALF + screen.get_rect().centery), ZERO), h)
+    else:
+        x = pointer_position[0]
+        y = pointer_position[1]
+    
     angle = calculate_angle_two_dimension(y, screen)
 
     data = {
@@ -63,7 +68,6 @@ def send_coords_calculator(pointer_position, screen, stress):
 
 def verify_respond(response):
     if response.status_code == 200:
-        print(f"{SUCCESS}.")
         return True
     else:
         print(f"{ERROR_POST}: {response.status_code}")

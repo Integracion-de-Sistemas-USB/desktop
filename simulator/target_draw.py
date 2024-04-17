@@ -38,7 +38,6 @@ def calculate_score(screen, collision_coordinate, stress, peripheral):
         x = collision_coordinate[0]
         y = collision_coordinate[1]
     else:
-        # Testing Porpuse
         x = collision_coordinate[0]
         y = collision_coordinate[1]
     

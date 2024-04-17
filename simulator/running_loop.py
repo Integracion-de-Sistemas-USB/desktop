@@ -62,7 +62,7 @@ async def start(screen, background_image, stress, name, code):
                 pointer_position = peripheral.get_pointer_position()
                 if peripheral.get_button_events():
                     if pointer_position != None:
-                        response_data = send_coords_calculator(pointer_position, screen, stress)
+                        response_data = send_coords_calculator(pointer_position, screen, stress, peripheral)
                         red_points.append((response_data['x'], response_data['y']))
                         shoot_sound.play()
                         print(f"{SCORE}:", calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral))
@@ -71,14 +71,15 @@ async def start(screen, background_image, stress, name, code):
                 print(READING_ERROR, e)
                 peripheral = None
         else:
-            # Testing Porpuse
+            # Testing Purpose only
             pointer_position = pygame.mouse.get_pos()
             if pygame.mouse.get_pressed()[0]:
                 if not mouse_pressed:
-                    red_points.append(pointer_position)
+                    response_data = send_coords_calculator(pointer_position, screen, stress, peripheral)
+                    red_points.append((response_data['x'], response_data['y']))
                     shoot_sound.play()
-                    print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
-                    send_post_request(pointer_position, screen, name, code)
+                    print(f"{SCORE}:", calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral))
+                    send_post_request((response_data['x'], response_data['y']), screen, name, code)
                     mouse_pressed = True
             else:
                 mouse_pressed = False
