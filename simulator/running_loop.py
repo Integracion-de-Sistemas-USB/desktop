@@ -1,6 +1,9 @@
 import time
 import pygame
-from server import statistics
+from server.statistics import (
+    send_post_request,
+    send_coords_calculator
+)
 from peripheral.constants import (
     INITIALIZATION_ERROR,
     POINTER_REFRESH_TIME,
@@ -12,7 +15,7 @@ from peripheral.constants import (
     SCORE
 )
 from simulator.shoot_draw import (
-    draw_mouse_pointer,
+    draw_shoot,
     draw_peripheral_pointer,
     draw_shoots
 )
@@ -59,10 +62,11 @@ async def start(screen, background_image, stress, name, code):
                 pointer_position = peripheral.get_pointer_position()
                 if peripheral.get_button_events():
                     if pointer_position != None:
-                        red_points.append(pointer_position)
+                        response_data = send_coords_calculator(pointer_position, screen, stress)
+                        red_points.append((response_data['x'], response_data['y']))
                         shoot_sound.play()
-                        print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
-                        statistics.send_post_request(pointer_position, screen, name, code)
+                        print(f"{SCORE}:", calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral))
+                        send_post_request((response_data['x'], response_data['y']), screen, name, code)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -74,7 +78,7 @@ async def start(screen, background_image, stress, name, code):
                     red_points.append(pointer_position)
                     shoot_sound.play()
                     print(f"{SCORE}:", calculate_score(screen, pointer_position, stress, peripheral))
-                    statistics.send_post_request(pointer_position, screen, name, code)
+                    send_post_request(pointer_position, screen, name, code)
                     mouse_pressed = True
             else:
                 mouse_pressed = False
@@ -82,8 +86,8 @@ async def start(screen, background_image, stress, name, code):
         if peripheral:
             draw_peripheral_pointer(pointer_position, WHITE, screen)
         else:
-            draw_mouse_pointer(pointer_position, WHITE, screen)
-        draw_shoots(red_points, RED, peripheral, screen)
+            draw_shoot(pointer_position, WHITE, screen)
+        draw_shoots(red_points, RED, screen)
         draw_target_with_distance(stress, screen)
 
         pygame.display.flip()

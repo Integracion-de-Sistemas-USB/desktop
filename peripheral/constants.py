@@ -27,3 +27,6 @@ STRESS_HIGH = "High"
 SCORE = "Score"
 DISTANCE = "Distance"
 METERS = "meters"
+ERROR_POST = "Error in request POST"
+SUCCESS = "Success"
+MAX_ANGLE = 90
