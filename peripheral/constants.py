@@ -33,3 +33,4 @@ METERS = "meters"
 ERROR_POST = "Error in request POST"
 SUCCESS = "Success"
 MAX_ANGLE = 45
+BULLET_LIMIT = 6
