@@ -56,7 +56,7 @@ def calculate_score(screen, collision_coordinate, stress, peripheral):
                 break
     return score
 
-def draw_target(distance, screen):
+def draw_target(distance, screen, caption):
     w, h = screen.get_size()
     target_center = (w // 2, h // 2)
 
@@ -80,11 +80,14 @@ def draw_target(distance, screen):
     else:
         pygame.draw.circle(screen, RED, target_center, POINTER_HIGH_SIZE)
 
-    font = pygame.font.SysFont(None, 24)
-    text = font.render(f"{DISTANCE}: {distance} {METERS}", True, BLACK)
+    font = pygame.font.SysFont(None, 36)
+    if caption:
+        text = font.render("Aim for the center of the target and press action button to calibrate the peripheral.", True, RED)
+    else:
+        text = font.render(f"{DISTANCE}: {distance} {METERS}", True, BLACK)
     text_rect = text.get_rect(center=(screen.get_rect().centerx, 30))
     screen.blit(text, text_rect)
 
 def draw_target_with_distance(stress, screen):
     distance = calculate_distance(stress)
-    draw_target(distance, screen)
+    draw_target(distance, screen, False)

@@ -47,6 +47,8 @@ async def simulator(data):
         background_sound = pygame.mixer.Sound(BytesIO(audio_data))
         background_sound.play(SOUND_DURATION_LIMIT)
 
+        from calibration.calibrator import calibrate
+        calibrate(screen)
         from simulator.running_loop import start
         await start(screen, background_image, data['Selected Percentage'], data[NAME], data[CODE])
     

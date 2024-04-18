@@ -15,8 +15,8 @@ from peripheral.constants import (
     SCORE
 )
 from simulator.shoot_draw import (
-    draw_shoot,
-    draw_shoots
+    draw_shoots,
+    draw_peripheral_pointer
 )
 from simulator.target_draw import draw_target_with_distance, calculate_score
 
@@ -87,6 +87,8 @@ async def start(screen, background_image, stress, name, code):
 
         draw_shoots(red_points, RED, screen, stress)
         draw_target_with_distance(stress, screen)
+        if stress == "None" and peripheral:
+            draw_peripheral_pointer(pointer_position, RED, screen)
 
         pygame.display.flip()
         time.sleep(POINTER_REFRESH_TIME)
