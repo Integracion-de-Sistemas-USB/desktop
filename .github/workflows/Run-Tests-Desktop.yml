@@ -1,0 +1,43 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Create Virtual Environment
+      run: |
+        pwd
+        python -m venv simulation
+        ls simulation/bin
+
+    - name: Activate Virtual Environment
+      run: |
+        source simulation/bin/activate
+
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run Tests
+      run: |
+        cd request
+        python -m pytest test.py
+
+    - name: Check Test Results
+      run: echo "Test results have been verified"
