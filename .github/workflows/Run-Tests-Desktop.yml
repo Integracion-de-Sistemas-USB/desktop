@@ -1,0 +1,44 @@
+name: Run Tests on Ubuntu or macOS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Change to 'macos-latest' if you want to use macOS
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Create Virtual Environment
+      run: |
+        python -m venv simulation
+        ls simulation/bin
+
+    - name: Activate Virtual Environment
+      run: |
+        # Activate the virtual environment
+        source simulation/bin/activate
+
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+
+    - name: Move to Request Folder
+      run: cd request
+
+    - name: Run Tests
+      run: python -m pytest test.py
+
+    - name: Check Test Results
+      run: echo "Test results have been verified"
