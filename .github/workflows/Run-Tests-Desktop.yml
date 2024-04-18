@@ -1,4 +1,4 @@
-name: Run Tests on Ubuntu or macOS
+name: Run Tests
 
 on:
   push:
@@ -23,22 +23,21 @@ jobs:
 
     - name: Create Virtual Environment
       run: |
+        pwd
         python -m venv simulation
         ls simulation/bin
 
     - name: Activate Virtual Environment
       run: |
-        # Activate the virtual environment
         source simulation/bin/activate
 
     - name: Install Dependencies
       run: pip install -r requirements.txt
 
-    - name: Move to Request Folder
-      run: cd request
-
     - name: Run Tests
-      run: python -m pytest test.py
+      run: |
+        cd request
+        python -m pytest test.py
 
     - name: Check Test Results
       run: echo "Test results have been verified"
