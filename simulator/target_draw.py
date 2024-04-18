@@ -7,7 +7,10 @@ from peripheral.constants import (
     STRESS_MEDIUM,
     STRESS_HIGH,
     DISTANCE,
-    METERS
+    METERS,
+    POINTER_LOW_SIZE,
+    POINTER_MEDIUM_SIZE,
+    POINTER_HIGH_SIZE
 )
 
 target_coordinates = []
@@ -70,7 +73,12 @@ def draw_target(distance, screen):
             y = target_center[1] + int(r * math.sin(math.radians(theta)))
             target_coordinates.append((x, y))
 
-    pygame.draw.circle(screen, RED, target_center, 5)
+    if distance == 10:
+        pygame.draw.circle(screen, RED, target_center, POINTER_LOW_SIZE)
+    if distance == 20:
+        pygame.draw.circle(screen, RED, target_center, POINTER_MEDIUM_SIZE)
+    else:
+        pygame.draw.circle(screen, RED, target_center, POINTER_HIGH_SIZE)
 
     font = pygame.font.SysFont(None, 24)
     text = font.render(f"{DISTANCE}: {distance} {METERS}", True, BLACK)
