@@ -6,10 +6,11 @@ from peripheral.constants import (
     STRESS_LOW,
     STRESS_MEDIUM,
     STRESS_HIGH,
-    HALF,
-    ZERO,
     DISTANCE,
-    METERS
+    METERS,
+    POINTER_LOW_SIZE,
+    POINTER_MEDIUM_SIZE,
+    POINTER_HIGH_SIZE
 )
 
 target_coordinates = []
@@ -37,10 +38,9 @@ def calculate_score(screen, collision_coordinate, stress, peripheral):
     scaled_radii = calculate_scaled_radii(distance)
 
     if peripheral:
-        x = (min(max((collision_coordinate[0] * w / HALF + screen.get_rect().centerx), ZERO), w))
-        y = (min(max((-collision_coordinate[1] * h / HALF + screen.get_rect().centery), ZERO), h))
+        x = collision_coordinate[0]
+        y = collision_coordinate[1]
     else:
-        # Testing Porpuse
         x = collision_coordinate[0]
         y = collision_coordinate[1]
     
@@ -73,7 +73,12 @@ def draw_target(distance, screen):
             y = target_center[1] + int(r * math.sin(math.radians(theta)))
             target_coordinates.append((x, y))
 
-    pygame.draw.circle(screen, RED, target_center, 5)
+    if distance == 10:
+        pygame.draw.circle(screen, RED, target_center, POINTER_LOW_SIZE)
+    if distance == 20:
+        pygame.draw.circle(screen, RED, target_center, POINTER_MEDIUM_SIZE)
+    else:
+        pygame.draw.circle(screen, RED, target_center, POINTER_HIGH_SIZE)
 
     font = pygame.font.SysFont(None, 24)
     text = font.render(f"{DISTANCE}: {distance} {METERS}", True, BLACK)
