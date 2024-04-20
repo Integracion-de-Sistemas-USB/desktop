@@ -2,7 +2,6 @@ from io import BytesIO
 import os
 import pygame
 from dotenv import load_dotenv
-import threading
 
 from form.text_constants import CODE, NAME
 from peripheral.constants import (
@@ -11,15 +10,15 @@ from peripheral.constants import (
     SOUND_DURATION_LIMIT,
     WIDTH,
     HEIGHT,
-    WAR_SOUNDS
 )
-from request.make_request import get_image_audio
+from request.make_request import get_image_audio, request_stress_audio
 
 load_dotenv()
 
-def play_war_sounds():
+async def play_war_sounds(data):
     pygame.mixer.init()
-    war_sound = pygame.mixer.Sound(os.getenv(WAR_SOUNDS))
+    stress_sound = await request_stress_audio(data['Selected Percentage'])
+    war_sound = pygame.mixer.Sound(BytesIO(stress_sound))
     war_sound.play(SOUND_DURATION_LIMIT)
 
 async def simulator(data):
@@ -40,8 +39,7 @@ async def simulator(data):
         pygame.display.set_caption(CAPTION)
 
         if data['Selected Percentage'] != 'None':
-            war_thread = threading.Thread(target=play_war_sounds)
-            war_thread.start()
+            await play_war_sounds(data)
 
         pygame.mixer.init()
         background_sound = pygame.mixer.Sound(BytesIO(audio_data))
@@ -50,7 +48,8 @@ async def simulator(data):
         from calibration.calibrator import calibrate
         calibrate(screen)
         from simulator.running_loop import start
-        await start(screen, background_image, data['Selected Percentage'], data[NAME], data[CODE])
+        scores = await start(screen, background_image, data['Selected Percentage'], data[NAME], data[CODE])
+        return scores
     
     except Exception as e:
         print(GENERIC_ERROR, e)

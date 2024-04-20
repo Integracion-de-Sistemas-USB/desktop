@@ -4,13 +4,14 @@ import aiohttp
 from request.constants import (
     AUDIO,
     IMAGE,
-    SCENERY
+    SCENERY,
+    SHOOT,
+    STRESS
 )
 
 async def request_scenery(session, scenery):
     async with session.get(os.getenv(SCENERY) + scenery.lower()) as response:
         return await response.json()
-
 
 async def get_image_audio(scenery):
     async with aiohttp.ClientSession() as session:
@@ -25,3 +26,21 @@ async def get_image_audio(scenery):
             audio_data = await response.read()
 
     return image_data, audio_data
+
+async def request_shoot_audio():
+    async with aiohttp.ClientSession() as session:
+        async with session.get(os.getenv(SHOOT)) as response:
+            data = await response.json()
+            bullet_audio_url = data[0]["bullet_audio"]
+            async with session.get(bullet_audio_url) as audio_response:
+                audio_data = await audio_response.read()
+    return audio_data
+
+async def request_stress_audio(level):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(os.getenv(STRESS) + level.lower()) as response:
+            data = await response.json()
+            stress_audio_url = data[0]["audio"]
+            async with session.get(stress_audio_url) as audio_response:
+                audio_data = await audio_response.read()
+    return audio_data

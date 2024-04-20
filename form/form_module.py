@@ -7,12 +7,8 @@ from .button_module import create_button_frame
 import json
 from .text_constants import (
     BOLD, 
-    ENVIRONMENT, 
-    ENVIRONMENT_LABEL, 
     FORM_TITLE, 
     HELVETICA, 
-    PHYSICS, 
-    PHYSICS_LABEL, 
     SCENERY_LABEL, 
     STRESS_LABEL, 
     USER_LABEL
@@ -22,6 +18,9 @@ def build_form(callback):
     root = tk.Tk()
     root.title(FORM_TITLE)
 
+    content_frame = ttk.Frame(root, padding="30 0")
+    content_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
     style = ttk.Style()
 
     def create_title_label(parent, text, row, column=0):
@@ -29,45 +28,23 @@ def build_form(callback):
         label.grid(row=row, column=column, columnspan=2, pady=(10, 5), sticky=tk.W)
         return label
 
-    create_title_label(root, PHYSICS_LABEL, row=0)
+    create_title_label(content_frame, USER_LABEL, row=0)
 
-    with open('config.json', 'r') as json_file:
-        config_data = json.load(json_file)
+    user_name_frame, user_name_entry = create_name_entry_frame(content_frame, label_text="Name:")
+    user_name_frame.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    physics = config_data[PHYSICS]
-    name_entries_physics = []
-    for i, entry in enumerate(physics, start=1):
-        name_entry_label = f"{entry}:"
-        name_entry_frame, name_entry = create_name_entry_frame(root, label_text=name_entry_label)
-        name_entry_frame.grid(row=i, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        name_entries_physics.append((name_entry_label, name_entry))
+    user_code_frame, user_code_entry = create_name_entry_frame(content_frame, label_text="Code:")
+    user_code_frame.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    create_title_label(root, ENVIRONMENT_LABEL, row=len(physics) + 1)
+    create_title_label(content_frame, SCENERY_LABEL, row=3, column=0)
+    radio_button_frame, option = create_radio_button_frame(content_frame)
+    radio_button_frame.grid(row=4, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    environment = config_data[ENVIRONMENT]
-    name_entries_environment = []
-    for i, entry in enumerate(environment, start=len(physics) + 2):
-        name_entry_label = f"{entry}:"
-        name_entry_frame, name_entry = create_name_entry_frame(root, label_text=name_entry_label)
-        name_entry_frame.grid(row=i, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        name_entries_environment.append((name_entry_label, name_entry))
+    create_title_label(content_frame, STRESS_LABEL, row=5, column=0)
+    drop_menu_frame, percentage_var = create_drop_menu_frame(content_frame)
+    drop_menu_frame.grid(row=6, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    create_title_label(root, SCENERY_LABEL, row=0, column=1)
-    radio_button_frame, option = create_radio_button_frame(root)
-    radio_button_frame.grid(row=1, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), rowspan=len(physics))
-
-    create_title_label(root, STRESS_LABEL, row=len(physics) + 1, column=1)
-    drop_menu_frame, percentage_var = create_drop_menu_frame(root)
-    drop_menu_frame.grid(row=len(physics) + 2, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), rowspan=len(environment))
-
-    create_title_label(root, USER_LABEL, row=len(physics) + len(environment) + 3)
-    user_name_frame, user_name_entry = create_name_entry_frame(root, label_text="Name:")
-    user_name_frame.grid(row=len(physics) + len(environment) + 4, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-
-    user_code_frame, user_code_entry = create_name_entry_frame(root, label_text="Code:")
-    user_code_frame.grid(row=len(physics) + len(environment) + 5, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-
-    button_frame = create_button_frame(root, name_entries_physics + name_entries_environment, option, percentage_var, user_name_entry, user_code_entry, callback)
-    button_frame.grid(row=len(physics) + len(environment) + 6, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
+    button_frame = create_button_frame(root, [], option, percentage_var, user_name_entry, user_code_entry, callback)
+    button_frame.grid(row=7, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
 
     root.mainloop()

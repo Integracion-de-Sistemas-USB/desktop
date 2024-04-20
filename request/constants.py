@@ -1,3 +1,5 @@
 IMAGE = 'image'
 AUDIO = 'audio'
 SCENERY = 'SCENERY_URL'
+SHOOT = 'SHOOT_URL'
+STRESS = 'STRESS_URL'
