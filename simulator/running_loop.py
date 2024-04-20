@@ -104,7 +104,7 @@ async def start(screen, background_image, stress, name, code):
                         if shoot_score > 0:
                             red_points.append((response_data['x'], response_data['y']))
                         print(f"{SCORE}:", shoot_score)
-                        send_post_request((response_data['x'], response_data['y']), screen, name, code)
+                        send_post_request(name, code, scores, stress)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -121,7 +121,7 @@ async def start(screen, background_image, stress, name, code):
                     if shoot_score > 0:
                         red_points.append((response_data['x'], response_data['y']))
                     print(f"{SCORE}:", shoot_score)
-                    send_post_request((response_data['x'], response_data['y']), screen, name, code)
+                    send_post_request(name, code, scores, stress)
                     mouse_pressed = True
             else:
                 mouse_pressed = False

@@ -5,27 +5,22 @@ from peripheral.constants import WIDTH, HEIGHT, HALF, ZERO, ERROR_POST, SUCCESS
 from simulator.target_draw import calculate_distance
 from simulator.angle_calculator import calculate_angle_two_dimension
 
-def send_post_request(pointer_position, screen, name, code):
+def send_post_request(name, code, scores, stress):
     load_dotenv()
     
+    scores_array = [value for value in scores.values()]
     url = os.getenv("CREATE_URL")
 
-    w, h = screen.get_size()
-    
     sample_data = {
-        "name": name,
         "code": code,
-        "x": min(max((pointer_position[0] * w / HALF + screen.get_rect().centerx), ZERO), w),
-        "y": min(max((-pointer_position[1] * h / HALF + screen.get_rect().centery), ZERO), h),
+        "name": name,
+        "score": scores_array,
         "scenary": {
             "bullet_weight": 5.0,
             "distance": 100.0,
             "ammo": "Sample Ammo",
-            "temperature": 25.0,
-            "altitude": 500.0,
-            "humidity": 50.0,
             "scenary": "Sample Scenery",
-            "stress_level": 3,
+            "stress_level": stress,
             "caliber": 0.45
         }
     }
