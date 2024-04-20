@@ -38,6 +38,9 @@ jobs:
       run: |
         cd request
         python -m pytest test.py
+        cd ..
+        cd peripheral
+        pytest
 
     - name: Check Test Results
       run: echo "Test results have been verified"
