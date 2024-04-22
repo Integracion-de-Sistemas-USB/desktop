@@ -43,7 +43,7 @@ def calculate_time(stress):
         time = 1000
     return time
 
-async def start(screen, background_image, stress, name, code):
+async def start(screen, background_image, stress, name, code, scenery):
     try:
         from peripheral.external_peripheral import ExternalPeripheral
         peripheral = ExternalPeripheral()
@@ -104,7 +104,7 @@ async def start(screen, background_image, stress, name, code):
                         if shoot_score > 0:
                             red_points.append((response_data['x'], response_data['y']))
                         print(f"{SCORE}:", shoot_score)
-                        send_post_request(name, code, scores, stress)
+                        send_post_request(name, code, scores, stress, scenery)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -121,7 +121,7 @@ async def start(screen, background_image, stress, name, code):
                     if shoot_score > 0:
                         red_points.append((response_data['x'], response_data['y']))
                     print(f"{SCORE}:", shoot_score)
-                    send_post_request(name, code, scores, stress)
+                    send_post_request(name, code, scores, stress, scenery)
                     mouse_pressed = True
             else:
                 mouse_pressed = False

@@ -5,7 +5,7 @@ from peripheral.constants import WIDTH, HEIGHT, HALF, ZERO, ERROR_POST, SUCCESS
 from simulator.target_draw import calculate_distance
 from simulator.angle_calculator import calculate_angle_two_dimension
 
-def send_post_request(name, code, scores, stress):
+def send_post_request(name, code, scores, stress, scenery):
     load_dotenv()
     
     scores_array = [value for value in scores.values()]
@@ -19,7 +19,7 @@ def send_post_request(name, code, scores, stress):
             "bullet_weight": 5.0,
             "distance": 100.0,
             "ammo": "Sample Ammo",
-            "scenary": "Sample Scenery",
+            "scenary": scenery,
             "stress_level": stress,
             "caliber": 0.45
         }
