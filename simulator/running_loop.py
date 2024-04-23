@@ -43,7 +43,7 @@ def calculate_time(stress):
         time = 1000
     return time
 
-async def start(screen, background_image, stress, name, code):
+async def start(screen, background_image, stress, name, code, scenery):
     try:
         from peripheral.external_peripheral import ExternalPeripheral
         peripheral = ExternalPeripheral()
@@ -96,15 +96,17 @@ async def start(screen, background_image, stress, name, code):
                 pointer_position = peripheral.get_pointer_position()
                 if peripheral.get_button_events():
                     if pointer_position != None:
-                        response_data = send_coords_calculator(pointer_position, screen, stress, peripheral)
+                        response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery)
                         shoot_sound.play()
                         shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                         scores[current_shoot] = shoot_score
                         current_shoot += 1
-                        if shoot_score > 0:
+                        if shoot_score > 0 and stress != "None":
+                            red_points.append((response_data['x'], response_data['y']))
+                        else:
                             red_points.append((response_data['x'], response_data['y']))
                         print(f"{SCORE}:", shoot_score)
-                        send_post_request(name, code, scores, stress)
+                        send_post_request(name, code, scores, stress, scenery)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -113,15 +115,17 @@ async def start(screen, background_image, stress, name, code):
             pointer_position = pygame.mouse.get_pos()
             if pygame.mouse.get_pressed()[0]:
                 if not mouse_pressed:
-                    response_data = send_coords_calculator(pointer_position, screen, stress, peripheral)
+                    response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery)
                     shoot_sound.play()
                     shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                     scores[current_shoot] = shoot_score
                     current_shoot += 1
-                    if shoot_score > 0:
+                    if shoot_score > 0 and stress != "None":
+                        red_points.append((response_data['x'], response_data['y']))
+                    else:
                         red_points.append((response_data['x'], response_data['y']))
                     print(f"{SCORE}:", shoot_score)
-                    send_post_request(name, code, scores, stress)
+                    send_post_request(name, code, scores, stress, scenery)
                     mouse_pressed = True
             else:
                 mouse_pressed = False
