@@ -101,9 +101,9 @@ async def start(screen, background_image, stress, name, code, scenery):
                         shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                         scores[current_shoot] = shoot_score
                         current_shoot += 1
-                        if shoot_score > 0 and stress != "None":
+                        if shoot_score > 0 and stress != 'None':
                             red_points.append((response_data['x'], response_data['y']))
-                        else:
+                        if stress == 'None':
                             red_points.append((response_data['x'], response_data['y']))
                         print(f"{SCORE}:", shoot_score)
                         send_post_request(name, code, scores, stress, scenery)
@@ -120,9 +120,9 @@ async def start(screen, background_image, stress, name, code, scenery):
                     shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                     scores[current_shoot] = shoot_score
                     current_shoot += 1
-                    if shoot_score > 0 and stress != "None":
-                        red_points.append((response_data['x'], response_data['y']))
-                    else:
+                    if shoot_score > 0 and stress != 'None':
+                            red_points.append((response_data['x'], response_data['y']))
+                    if stress == 'None':
                         red_points.append((response_data['x'], response_data['y']))
                     print(f"{SCORE}:", shoot_score)
                     send_post_request(name, code, scores, stress, scenery)
