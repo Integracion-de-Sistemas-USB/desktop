@@ -47,13 +47,14 @@ def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery
     
     angle = calculate_angle_two_dimension(y, screen)
     print("Scenery: " + scenery)
+
     data = {
         "initial_velocity": 1000,
         "x": x,
         "y": y,
         "target_distance": distance,
-        "scenary": scenery,
-        "angle": -angle
+        "angle": -angle,
+        "scenary": scenery
     }
 
     response = requests.post(url, json=data)

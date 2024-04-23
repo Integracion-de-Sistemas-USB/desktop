@@ -48,7 +48,7 @@ async def simulator(data):
         from calibration.calibrator import calibrate
         calibrate(screen)
         from simulator.running_loop import start
-        scores = await start(screen, background_image, data[SELECTED_PERCENTAGE], data[NAME], data[CODE], data[SCENERY])
+        scores = await start(screen, background_image, data[SELECTED_PERCENTAGE], data[NAME], data[CODE], data["Selected Option"])
         return scores
     
     except Exception as e:
