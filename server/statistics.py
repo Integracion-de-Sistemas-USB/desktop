@@ -29,7 +29,7 @@ def send_post_request(name, code, scores, stress, scenery):
     
     verify_respond(response)
 
-def send_coords_calculator(pointer_position, screen, stress, peripheral):
+def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery):
     load_dotenv()
     
     url = os.getenv("CALCULATE_URL")
@@ -46,12 +46,13 @@ def send_coords_calculator(pointer_position, screen, stress, peripheral):
         y = pointer_position[1]
     
     angle = calculate_angle_two_dimension(y, screen)
-
+    print("Scenery: " + scenery)
     data = {
         "initial_velocity": 1000,
         "x": x,
         "y": y,
         "target_distance": distance,
+        "scenary": scenery,
         "angle": -angle
     }
 
