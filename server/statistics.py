@@ -49,7 +49,6 @@ def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery
     print("Scenery: " + scenery)
 
     data = {
-        "initial_velocity": 1000,
         "x": x,
         "y": y,
         "target_distance": distance,
