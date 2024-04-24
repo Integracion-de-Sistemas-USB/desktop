@@ -7,6 +7,7 @@ from server.statistics import (
 )
 from request.make_request import request_shoot_audio
 from peripheral.constants import (
+    BLACK,
     BULLET_LIMIT,
     INITIALIZATION_ERROR,
     POINTER_REFRESH_TIME,
@@ -75,19 +76,22 @@ async def start(screen, background_image, stress, name, code, scenery):
             elapsed_time = time.time() - start_time
             timer_text = f"Time: {int(stress_time - elapsed_time)}s"
             timer_font = pygame.font.SysFont(None, 30)
-            timer_surface = timer_font.render(timer_text, True, WHITE)
+            timer_surface = timer_font.render(timer_text, True, BLACK)
             screen.blit(timer_surface, (10, screen.get_height() - 40))
+            if elapsed_time >= stress_time:
+                running = False
+
         else:
             # No stress mode
             timer_text = "Time: Unlimited"
             timer_font = pygame.font.SysFont(None, 30)
-            timer_surface = timer_font.render(timer_text, True, WHITE)
+            timer_surface = timer_font.render(timer_text, True, BLACK)
             screen.blit(timer_surface, (10, screen.get_height() - 40))
 
         # Display bullets left
         bullets_left_text = f"Bullets Left: {BULLET_LIMIT - current_shoot}"
         bullets_font = pygame.font.SysFont(None, 30)
-        bullets_surface = bullets_font.render(bullets_left_text, True, WHITE)
+        bullets_surface = bullets_font.render(bullets_left_text, True, BLACK)
         screen.blit(bullets_surface, (screen.get_width() - bullets_surface.get_width() - 10, screen.get_height() - 40))
 
         if peripheral:
