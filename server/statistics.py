@@ -26,10 +26,21 @@ def send_post_request(name, code, scores, stress, scenery, distance):
     }
 
     response = requests.post(url, json=sample_data)
-    
     verify_respond(response)
 
-def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery):
+def get_scenery(scenery): 
+    load_dotenv()
+    url = os.getenv("SCENERY_URL") + scenery.lower()
+    response = requests.get(url).json()
+    return response[0]
+
+def get_ammo(): 
+    load_dotenv()
+    url = os.getenv("SHOOT_URL") 
+    response = requests.get(url).json()
+    return response[0]
+
+def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery_name):
     load_dotenv()
     
     url = os.getenv("CALCULATE_URL")
@@ -46,14 +57,14 @@ def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery
         y = pointer_position[1]
     
     angle = calculate_angle_two_dimension(y, screen)
-    print("Scenery: " + scenery)
-
+    
     data = {
         "x": x,
         "y": y,
         "target_distance": distance,
         "angle": -angle,
-        "scenary": scenery
+        "scenary": get_scenery(scenery_name),
+        "ammo": get_ammo()
     }
 
     response = requests.post(url, json=data)
