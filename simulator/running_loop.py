@@ -25,7 +25,7 @@ from simulator.shoot_draw import (
     draw_shoots,
     draw_peripheral_pointer
 )
-from simulator.target_draw import draw_target_with_distance, calculate_score
+from simulator.target_draw import draw_target_with_distance, calculate_score, calculate_distance
 import aiohttp
 import os
 
@@ -77,7 +77,7 @@ async def start(screen, background_image, stress, name, code, scenery):
             timer_text = f"Time: {int(stress_time - elapsed_time)}s"
             timer_font = pygame.font.SysFont(None, 30)
             timer_surface = timer_font.render(timer_text, True, BLACK)
-            screen.blit(timer_surface, (10, screen.get_height() - 40))
+            screen.blit(timer_surface, (10, 10))
             if elapsed_time >= stress_time:
                 running = False
 
@@ -86,13 +86,13 @@ async def start(screen, background_image, stress, name, code, scenery):
             timer_text = "Time: Unlimited"
             timer_font = pygame.font.SysFont(None, 30)
             timer_surface = timer_font.render(timer_text, True, BLACK)
-            screen.blit(timer_surface, (10, screen.get_height() - 40))
+            screen.blit(timer_surface, (10, 10))
 
         # Display bullets left
         bullets_left_text = f"Bullets Left: {BULLET_LIMIT - current_shoot}"
         bullets_font = pygame.font.SysFont(None, 30)
         bullets_surface = bullets_font.render(bullets_left_text, True, BLACK)
-        screen.blit(bullets_surface, (screen.get_width() - bullets_surface.get_width() - 10, screen.get_height() - 40))
+        screen.blit(bullets_surface, (screen.get_width() - bullets_surface.get_width() - 10, 10))
 
         if peripheral:
             pygame.mouse.set_visible(False)
@@ -110,7 +110,6 @@ async def start(screen, background_image, stress, name, code, scenery):
                         if stress == 'None':
                             red_points.append((response_data['x'], response_data['y']))
                         print(f"{SCORE}:", shoot_score)
-                        send_post_request(name, code, scores, stress, scenery)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -129,7 +128,6 @@ async def start(screen, background_image, stress, name, code, scenery):
                     if stress == 'None':
                         red_points.append((response_data['x'], response_data['y']))
                     print(f"{SCORE}:", shoot_score)
-                    send_post_request(name, code, scores, stress, scenery)
                     mouse_pressed = True
             else:
                 mouse_pressed = False
@@ -145,4 +143,5 @@ async def start(screen, background_image, stress, name, code, scenery):
         if current_shoot == BULLET_LIMIT:
             running = False
 
+    send_post_request(name, code, scores, stress, scenery, calculate_distance(stress))
     return scores
