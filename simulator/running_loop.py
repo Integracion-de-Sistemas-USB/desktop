@@ -25,7 +25,7 @@ from simulator.shoot_draw import (
     draw_shoots,
     draw_peripheral_pointer
 )
-from simulator.target_draw import draw_target_with_distance, calculate_score
+from simulator.target_draw import draw_target_with_distance, calculate_score, calculate_distance
 import aiohttp
 import os
 
@@ -110,7 +110,6 @@ async def start(screen, background_image, stress, name, code, scenery):
                         if stress == 'None':
                             red_points.append((response_data['x'], response_data['y']))
                         print(f"{SCORE}:", shoot_score)
-                        send_post_request(name, code, scores, stress, scenery)
             except Exception as e:
                 print(READING_ERROR, e)
                 peripheral = None
@@ -129,7 +128,6 @@ async def start(screen, background_image, stress, name, code, scenery):
                     if stress == 'None':
                         red_points.append((response_data['x'], response_data['y']))
                     print(f"{SCORE}:", shoot_score)
-                    send_post_request(name, code, scores, stress, scenery)
                     mouse_pressed = True
             else:
                 mouse_pressed = False
@@ -145,4 +143,5 @@ async def start(screen, background_image, stress, name, code, scenery):
         if current_shoot == BULLET_LIMIT:
             running = False
 
+    send_post_request(name, code, scores, stress, scenery, calculate_distance(stress))
     return scores
