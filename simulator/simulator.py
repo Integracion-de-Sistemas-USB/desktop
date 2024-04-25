@@ -29,7 +29,8 @@ async def simulator(data):
         loading_text = loading_font.render("Loading...", True, (255, 255, 255))
         screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
         screen.fill((0, 0, 0))
-        screen.blit(loading_text, (WIDTH // 2 - loading_text.get_width() // 2, HEIGHT // 2 - loading_text.get_height() // 2))
+        text_rect = loading_text.get_rect(center=screen.get_rect().center)
+        screen.blit(loading_text, text_rect.topleft)
         pygame.display.flip()
 
         image_data, audio_data = await get_image_audio(data['Selected Option'])

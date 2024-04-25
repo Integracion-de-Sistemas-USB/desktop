@@ -77,6 +77,9 @@ async def start(screen, background_image, stress, name, code, scenery):
             timer_font = pygame.font.SysFont(None, 30)
             timer_surface = timer_font.render(timer_text, True, WHITE)
             screen.blit(timer_surface, (10, screen.get_height() - 40))
+            if elapsed_time >= stress_time:
+                running = False
+
         else:
             # No stress mode
             timer_text = "Time: Unlimited"
