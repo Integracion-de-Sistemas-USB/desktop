@@ -77,7 +77,7 @@ async def start(screen, background_image, stress, name, code, scenery):
             timer_text = f"Time: {int(stress_time - elapsed_time)}s"
             timer_font = pygame.font.SysFont(None, 30)
             timer_surface = timer_font.render(timer_text, True, BLACK)
-            screen.blit(timer_surface, (10, screen.get_height() - 40))
+            screen.blit(timer_surface, (10, 10))
             if elapsed_time >= stress_time:
                 running = False
 
@@ -86,13 +86,13 @@ async def start(screen, background_image, stress, name, code, scenery):
             timer_text = "Time: Unlimited"
             timer_font = pygame.font.SysFont(None, 30)
             timer_surface = timer_font.render(timer_text, True, BLACK)
-            screen.blit(timer_surface, (10, screen.get_height() - 40))
+            screen.blit(timer_surface, (10, 10))
 
         # Display bullets left
         bullets_left_text = f"Bullets Left: {BULLET_LIMIT - current_shoot}"
         bullets_font = pygame.font.SysFont(None, 30)
         bullets_surface = bullets_font.render(bullets_left_text, True, BLACK)
-        screen.blit(bullets_surface, (screen.get_width() - bullets_surface.get_width() - 10, screen.get_height() - 40))
+        screen.blit(bullets_surface, (screen.get_width() - bullets_surface.get_width() - 10, 10))
 
         if peripheral:
             pygame.mouse.set_visible(False)

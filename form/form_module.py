@@ -47,4 +47,7 @@ def build_form(callback):
     button_frame = create_button_frame(root, [], option, percentage_var, user_name_entry, user_code_entry, callback)
     button_frame.grid(row=7, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
 
+    version_label = tk.Label(root, text="v1.1.2")
+    version_label.grid(row=8, column=0, sticky=tk.W, padx=10, pady=10)
+
     root.mainloop()
