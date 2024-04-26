@@ -35,13 +35,14 @@ def get_scenery(scenery):
     response = requests.get(url).json()
     return response[0]
 
-def get_ammo(): 
+def get_ammo(weapon_name): 
     load_dotenv()
-    url = os.getenv("SHOOT_URL") 
+    url = os.getenv("SHOOT_URL").replace("glock19", weapon_name)
     response = requests.get(url).json()
+    print(response)
     return response[0]
 
-def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery_name):
+def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery_name, weapon_name):
     load_dotenv()
     
     url = os.getenv("CALCULATE_URL")
@@ -65,7 +66,7 @@ def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery
         "target_distance": distance,
         "angle": -angle,
         "scenary": get_scenery(scenery_name),
-        "ammo": get_ammo()
+        "ammo": get_ammo(weapon_name)
     }
 
     response = requests.post(url, json=data)

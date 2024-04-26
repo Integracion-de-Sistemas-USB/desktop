@@ -100,7 +100,7 @@ async def start(screen, background_image, stress, name, code, scenery, weapon):
                 pointer_position = peripheral.get_pointer_position()
                 if peripheral.get_button_events():
                     if pointer_position != None:
-                        response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery)
+                        response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery, weapon)
                         shoot_sound.play()
                         shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                         scores[current_shoot] = shoot_score
@@ -118,7 +118,7 @@ async def start(screen, background_image, stress, name, code, scenery, weapon):
             pointer_position = pygame.mouse.get_pos()
             if pygame.mouse.get_pressed()[0]:
                 if not mouse_pressed:
-                    response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery)
+                    response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery, weapon)
                     shoot_sound.play()
                     shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                     scores[current_shoot] = shoot_score
