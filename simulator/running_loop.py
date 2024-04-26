@@ -44,7 +44,7 @@ def calculate_time(stress):
         time = 1000
     return time
 
-async def start(screen, background_image, stress, name, code, scenery):
+async def start(screen, background_image, stress, name, code, scenery, weapon):
     try:
         from peripheral.external_peripheral import ExternalPeripheral
         peripheral = ExternalPeripheral()
@@ -143,5 +143,5 @@ async def start(screen, background_image, stress, name, code, scenery):
         if current_shoot == BULLET_LIMIT:
             running = False
 
-    send_post_request(name, code, scores, stress, scenery, calculate_distance(stress))
+    send_post_request(name, code, scores, stress, scenery, calculate_distance(stress), weapon)
     return scores
