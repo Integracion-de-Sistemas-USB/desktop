@@ -84,7 +84,7 @@ def draw_target(distance, screen, caption):
     if caption:
         text = font.render("Aim for the center of the target and press action button to calibrate the peripheral.", True, RED)
     else:
-        text = font.render(f"{DISTANCE}: {distance} {METERS}", True, BLACK)
+        text = font.render(f"{DISTANCE}: {distance} {METERS}", True, RED)
     text_rect = text.get_rect(center=(screen.get_rect().centerx, 30))
     screen.blit(text, text_rect)
 
