@@ -41,13 +41,17 @@ def build_form(callback):
     radio_button_frame.grid(row=4, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
     create_title_label(content_frame, STRESS_LABEL, row=5, column=0)
-    drop_menu_frame, percentage_var = create_drop_menu_frame(content_frame)
+    drop_menu_frame, percentage_var = create_drop_menu_frame(content_frame, ["Low", "Medium", "High"], "Level:", "None")
     drop_menu_frame.grid(row=6, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    button_frame = create_button_frame(root, [], option, percentage_var, user_name_entry, user_code_entry, callback)
-    button_frame.grid(row=7, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
+    create_title_label(content_frame, "Weapon Type:", row=7, column=0)
+    drop_menu_frame_type, weapon_type = create_drop_menu_frame(content_frame, ["glock19", "FNX-45", "desert eagle"], "Type:", "glock19")
+    drop_menu_frame_type.grid(row=8, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+    button_frame = create_button_frame(root, [], option, percentage_var, user_name_entry, user_code_entry, weapon_type, callback)
+    button_frame.grid(row=9, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S))
 
     version_label = tk.Label(root, text="v1.1.2")
-    version_label.grid(row=8, column=0, sticky=tk.W, padx=10, pady=10)
+    version_label.grid(row=10, column=0, sticky=tk.W, padx=10, pady=10)
 
     root.mainloop()

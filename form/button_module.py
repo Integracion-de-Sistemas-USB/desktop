@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from .text_constants import SELECTED_OPTION, SELECTED_PERCENTAGE, NAME, CODE
 
-def create_button_frame(parent_frame, name_entries, option, percentage_var, user_entry, code_entry, callback):
+def create_button_frame(parent_frame, name_entries, option, percentage_var, user_entry, code_entry, weapon_type, callback):
     frame = ttk.Frame(parent_frame, padding="10")
 
     def submit_form():
@@ -15,6 +15,7 @@ def create_button_frame(parent_frame, name_entries, option, percentage_var, user
         form_data[SELECTED_PERCENTAGE] = percentage_var.get()
         form_data[NAME] = user_entry.get()
         form_data[CODE] = code_entry.get()
+        form_data["Selected Type"] = weapon_type.get()
         parent_frame.destroy()
 
         callback(form_data)
