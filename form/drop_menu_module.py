@@ -12,7 +12,7 @@ def create_drop_menu_frame(parent_frame, options, title, default):
 
     percentage_var = tk.StringVar(value=default)
 
-    percentage_combobox = ttk.Combobox(frame, values=options, textvariable=percentage_var)
+    percentage_combobox = ttk.Combobox(frame, state="readonly", values=options, textvariable=percentage_var)
     percentage_combobox.grid(row=0, column=1, sticky=tk.W, padx=5, pady=5)
 
     return frame, percentage_var
