@@ -1,5 +1,6 @@
 import requests
 import os
+import re
 from dotenv import load_dotenv
 from peripheral.constants import WIDTH, HEIGHT, HALF, ZERO, ERROR_POST, SUCCESS
 from simulator.target_draw import calculate_distance
@@ -14,23 +15,26 @@ def send_post_request(name, code, scores, stress, scenery, distance, weapon):
     name = name if name else "Unknown"
     code = code if code else "Unknown"
 
-    sample_data = {
-        "code": code,
-        "name": name,
-        "score": scores_array,
-        "gun": weapon,
-        "scenary": {
-            "bullet_weight": 5.0,
-            "distance": distance,
-            "ammo": "Sample Ammo",
-            "scenary": scenery,
-            "stress_level": stress,
-            "caliber": 0.45
+    if re.match("^[a-zA-Z ]+$", name):
+        sample_data = {
+            "code": code,
+            "name": name,
+            "score": scores_array,
+            "gun": weapon,
+            "scenary": {
+                "bullet_weight": 5.0,
+                "distance": distance,
+                "ammo": "Sample Ammo",
+                "scenary": scenery,
+                "stress_level": stress,
+                "caliber": 0.45
+            }
         }
-    }
 
-    response = requests.post(url, json=sample_data)
-    verify_respond(response)
+        response = requests.post(url, json=sample_data)
+        verify_respond(response)
+    else:
+        print(f"{ERROR_POST}: Incorrect Format Name.")
 
 def get_scenery(scenery): 
     load_dotenv()
