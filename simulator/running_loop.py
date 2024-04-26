@@ -44,7 +44,7 @@ def calculate_time(stress):
         time = 1000
     return time
 
-async def start(screen, background_image, stress, name, code, scenery):
+async def start(screen, background_image, stress, name, code, scenery, weapon):
     try:
         from peripheral.external_peripheral import ExternalPeripheral
         peripheral = ExternalPeripheral()
@@ -100,7 +100,7 @@ async def start(screen, background_image, stress, name, code, scenery):
                 pointer_position = peripheral.get_pointer_position()
                 if peripheral.get_button_events():
                     if pointer_position != None:
-                        response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery)
+                        response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery, weapon)
                         shoot_sound.play()
                         shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                         scores[current_shoot] = shoot_score
@@ -118,7 +118,7 @@ async def start(screen, background_image, stress, name, code, scenery):
             pointer_position = pygame.mouse.get_pos()
             if pygame.mouse.get_pressed()[0]:
                 if not mouse_pressed:
-                    response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery)
+                    response_data = send_coords_calculator(pointer_position, screen, stress, peripheral, scenery, weapon)
                     shoot_sound.play()
                     shoot_score = calculate_score(screen, (response_data['x'], response_data['y']), stress, peripheral)
                     scores[current_shoot] = shoot_score
@@ -143,5 +143,5 @@ async def start(screen, background_image, stress, name, code, scenery):
         if current_shoot == BULLET_LIMIT:
             running = False
 
-    send_post_request(name, code, scores, stress, scenery, calculate_distance(stress))
+    send_post_request(name, code, scores, stress, scenery, calculate_distance(stress), weapon)
     return scores

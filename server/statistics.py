@@ -1,32 +1,40 @@
 import requests
 import os
+import re
 from dotenv import load_dotenv
 from peripheral.constants import WIDTH, HEIGHT, HALF, ZERO, ERROR_POST, SUCCESS
 from simulator.target_draw import calculate_distance
 from simulator.angle_calculator import calculate_angle_two_dimension
 
-def send_post_request(name, code, scores, stress, scenery, distance):
+def send_post_request(name, code, scores, stress, scenery, distance, weapon):
     load_dotenv()
     
     scores_array = [value for value in scores.values()]
     url = os.getenv("CREATE_URL")
 
-    sample_data = {
-        "code": code,
-        "name": name,
-        "score": scores_array,
-        "scenary": {
-            "bullet_weight": 5.0,
-            "distance": distance,
-            "ammo": "Sample Ammo",
-            "scenary": scenery,
-            "stress_level": stress,
-            "caliber": 0.45
-        }
-    }
+    name = name if name else "Unknown"
+    code = code if code else "Unknown"
 
-    response = requests.post(url, json=sample_data)
-    verify_respond(response)
+    if re.match("^[a-zA-Z ]+$", name):
+        sample_data = {
+            "code": code,
+            "name": name,
+            "score": scores_array,
+            "gun": weapon,
+            "scenary": {
+                "bullet_weight": 5.0,
+                "distance": distance,
+                "ammo": "Sample Ammo",
+                "scenary": scenery,
+                "stress_level": stress,
+                "caliber": 0.45
+            }
+        }
+
+        response = requests.post(url, json=sample_data)
+        verify_respond(response)
+    else:
+        print(f"{ERROR_POST}: Incorrect Format Name.")
 
 def get_scenery(scenery): 
     load_dotenv()
@@ -34,13 +42,14 @@ def get_scenery(scenery):
     response = requests.get(url).json()
     return response[0]
 
-def get_ammo(): 
+def get_ammo(weapon_name): 
     load_dotenv()
-    url = os.getenv("SHOOT_URL") 
+    url = os.getenv("SHOOT_URL").replace("glock19", weapon_name)
     response = requests.get(url).json()
+    print(response)
     return response[0]
 
-def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery_name):
+def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery_name, weapon_name):
     load_dotenv()
     
     url = os.getenv("CALCULATE_URL")
@@ -64,7 +73,7 @@ def send_coords_calculator(pointer_position, screen, stress, peripheral, scenery
         "target_distance": distance,
         "angle": -angle,
         "scenary": get_scenery(scenery_name),
-        "ammo": get_ammo()
+        "ammo": get_ammo(weapon_name)
     }
 
     response = requests.post(url, json=data)
