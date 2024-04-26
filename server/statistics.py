@@ -11,6 +11,9 @@ def send_post_request(name, code, scores, stress, scenery, distance, weapon):
     scores_array = [value for value in scores.values()]
     url = os.getenv("CREATE_URL")
 
+    name = name if name else "Unknown"
+    code = code if code else "Unknown"
+
     sample_data = {
         "code": code,
         "name": name,
